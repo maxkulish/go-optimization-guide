@@ -1,0 +1,34 @@
+# mkdocs.yml - Configuration for MkDocs
+
+site_name: Go Performance Patterns
+repo_url: https://github.com/astavonin/go-performance-book
+site_url: https://astavonin.github.io/go-performance-book/
+
+theme:
+  name: material
+  palette:
+    scheme: slate  # Dark mode, change to "default" for light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+
+nav:
+  - Home: index.md
+  - Common Go Patterns for Performance:
+    - Overview: 01-common-patterns/overview.md
+    - Object Pooling: 01-common-patterns/object-pooling.md
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.tilde
+
+plugins:
+  - search
+
