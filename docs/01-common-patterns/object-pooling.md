@@ -147,7 +147,6 @@ func BenchmarkWithPooling(b *testing.B) {
 ### Benchmark Results
 
 ```
-cpu: Apple M3 Max
 BenchmarkWithoutPooling-14       1692014               705.4 ns/op          8192 B/op          1 allocs/op
 BenchmarkWithPooling-14         160440506                7.455 ns/op           0 B/op          0 allocs/op
 ```

@@ -78,4 +78,10 @@ tags
 # Persistent undo
 [._]*.un~
 
+/test.go
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,vim,go
+
+#MkDocs
+
+/site/

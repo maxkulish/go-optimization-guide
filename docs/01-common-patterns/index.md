@@ -1,4 +1,4 @@
-#12 Essential Go Performance Patterns
+# Common Go Patterns for Performance
 
 Optimizing Go applications requires understanding common patterns that help reduce latency, improve memory efficiency, and enhance concurrency. Below are twelve key strategies experienced Go developers use to write high-performance code.
 
@@ -6,7 +6,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Allocating and deallocating objects repeatedly can put unnecessary strain on the garbage collector. A better approach is to reuse objects by implementing an object pool. This is particularly effective for large data structures or high-throughput workloads where reducing allocation overhead makes a significant impact.
 
-2. Memory Preallocation
+2. [Memory Preallocation](./mem-prealloc.md)
 
 	Dynamic memory growth can lead to frequent reallocations, slowing down execution. Preallocating slices and maps using `make` ensures efficient memory usage and helps prevent performance penalties in tight loops.
 

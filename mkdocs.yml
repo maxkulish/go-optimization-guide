@@ -9,6 +9,7 @@ theme:
   palette:
     scheme: slate  # Dark mode, change to "default" for light mode
   features:
+    - navigation.indexes
     - navigation.instant
     - navigation.tracking
     - search.suggest
@@ -17,8 +18,9 @@ theme:
 nav:
   - Home: index.md
   - Common Go Patterns for Performance:
-    - Overview: 01-common-patterns/overview.md
+    - Common Go Patterns for Performance: 01-common-patterns/index.md
     - Object Pooling: 01-common-patterns/object-pooling.md
+    - Memory Preallocation: 01-common-patterns/mem-prealloc.md
 
 markdown_extensions:
   - toc:
