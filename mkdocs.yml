@@ -7,13 +7,15 @@ site_url: https://astavonin.github.io/go-performance-book/
 theme:
   name: material
   palette:
-    scheme: slate  # Dark mode, change to "default" for light mode
+    scheme: default
   features:
     - navigation.indexes
     - navigation.instant
     - navigation.tracking
     - search.suggest
     - search.highlight
+    - content.code.copy
+    - content.code.annotate
 
 nav:
   - Home: index.md
@@ -21,6 +23,7 @@ nav:
     - Common Go Patterns for Performance: 01-common-patterns/index.md
     - Object Pooling: 01-common-patterns/object-pooling.md
     - Memory Preallocation: 01-common-patterns/mem-prealloc.md
+    - Efficient Buffering: 01-common-patterns/buffered-io.md
 
 markdown_extensions:
   - toc:
@@ -30,7 +33,9 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.inlinehilite
   - pymdownx.tilde
+  - pymdownx.details
 
 plugins:
   - search
-
+  - git-revision-date-localized
+  - include-markdown

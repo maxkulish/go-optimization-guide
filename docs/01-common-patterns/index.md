@@ -10,7 +10,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Dynamic memory growth can lead to frequent reallocations, slowing down execution. Preallocating slices and maps using `make` ensures efficient memory usage and helps prevent performance penalties in tight loops.
 
-3. Efficient Buffering
+3. [Efficient Buffering](./buffered-io.md)
 
 	Frequent system calls for I/O operations can be costly. Using buffered readers, writers (`bufio.Reader`, `bufio.Writer`), and buffered channels reduces the number of calls, improving performance in scenarios involving file or network operations.
 

@@ -1,6 +1,6 @@
 # Memory Preallocation
 
-Memory preallocation is a straightforward yet highly effective performance optimization strategy in Go. By allocating the required memory upfront, developers can eliminate hidden overhead related to dynamic resizing—such as memory allocations, data copying, and increased garbage collection frequency. This approach enhances application predictability and performance, particularly beneficial in performance-critical or high-throughput environments.
+Memory preallocation is a powerful and straightforward optimization technique in Go. By explicitly allocating required memory upfront, developers reduce hidden costs associated with dynamic resizing—such as frequent memory allocations, data copying, and increased garbage collection (GC) activity. Effective preallocation leads to predictable, efficient performance, especially crucial for performance-critical or high-throughput systems.
 
 ## Why Preallocation Matters
 
@@ -80,25 +80,11 @@ This helps the runtime allocate enough internal storage upfront, avoiding rehash
 
 Here’s a simple benchmark comparing appending to a preallocated slice vs. a zero-capacity slice:
 
-```go
-func BenchmarkAppendNoPrealloc(b *testing.B) {
-    for i := 0; i < b.N; i++ {
-        var s []int
-        for j := 0; j < 10000; j++ {
-            s = append(s, j)
-        }
-    }
-}
+??? example "Show the benchmark file"
+    ```go
+    {% include "01-common-patterns/src/mem-prealloc_test.go" %}
+    ```
 
-func BenchmarkAppendWithPrealloc(b *testing.B) {
-    for i := 0; i < b.N; i++ {
-        s := make([]int, 0, 10000)
-        for j := 0; j < 10000; j++ {
-            s = append(s, j)
-        }
-    }
-}
-```
 
 You’ll typically observe that preallocation reduces allocations to a single one per operation and significantly improves throughput.
 
@@ -107,9 +93,16 @@ BenchmarkAppendNoPrealloc-14               41727             28539 ns/op        
 BenchmarkAppendWithPrealloc-14            170154              7093 ns/op           81920 B/op          1 allocs/op
 ```
 
-### When To Preallocate
+## When To Preallocate
 
-Preallocation should be leveraged when the final size of your slices or maps can be reasonably anticipated, especially within loops or high-frequency operations. In such scenarios, preallocation leads to fewer memory allocations, reduced garbage collection overhead, and improved predictability.
+✅ Preallocate when:
 
-However, preallocation isn’t universally beneficial. When dealing with unpredictable or widely varying data sizes, aggressive preallocation can cause unnecessary memory consumption. It may also result in over-provisioned memory, especially problematic in concurrent systems managing numerous large buffers simultaneously. As with all optimizations, profiling your application is essential to confirm that preallocation effectively addresses your performance constraints without introducing new issues.
+- The number of elements in slices or maps is known or reasonably predictable.
+- Your application involves tight loops or high-throughput data processing.
+- Minimizing garbage collection overhead is crucial for your application's performance.
 
+❌ Avoid preallocation when:
+
+- The data size is highly variable and unpredictable.
+- Over-allocation risks significant memory waste.
+- You're prematurely optimizing—always profile to confirm the benefit.

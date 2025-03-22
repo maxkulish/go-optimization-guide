@@ -8,7 +8,7 @@ Using the `sync. Pool` package, we can efficiently implement object pooling in G
 
 Object pooling allows objects to be reused rather than allocated anew, minimizing the strain on the garbage collector. Instead of requesting new memory from the heap each time, objects are fetched from a pre-allocated pool and returned when no longer needed. This reduces allocation overhead and improves runtime efficiency.
 
-### Example 1: Using `sync.Pool` for Object Reuse
+### Using `sync.Pool` for Object Reuse
 
 #### Without Object Pooling (Inefficient Memory Usage)
 ```go
@@ -66,7 +66,7 @@ func main() {
 }
 ```
 
-### Example 2: Pooling Byte Buffers for Efficient I/O
+### Pooling Byte Buffers for Efficient I/O
 
 Object pooling is especially effective when working with large byte slices that would otherwise lead to high allocation and garbage collection overhead.
 
@@ -96,62 +96,19 @@ func main() {
 
 Using `sync.Pool` for byte buffers significantly reduces memory pressure when dealing with high-frequency I/O operations.
 
-## How To Verify Object Pooling's Impact
+## Benchmarking Impact
 
 To prove that object pooling actually reduces allocations and improves speed, we can use Go's built-in memory profiling tools (`pprof`) and compare memory allocations between the non-pooled and pooled versions. Simulating a full-scale application that actively uses memory for benchmarking is challenging, so we need a controlled test to evaluate direct heap allocations versus pooled allocations.
 
-### The Benchmark
-
-```go
-package main
-
-import (
-    "testing"
-    "sync"
-)
-
-// Data is a struct with a large fixed-size array to simulate a memory-intensive object.
-type Data struct {
-    Values [1024]int
-}
-
-// globalSink prevents compiler optimizations that could remove memory allocations.
-var globalSink *Data
-
-// BenchmarkWithoutPooling measures the performance of direct heap allocations.
-func BenchmarkWithoutPooling(b *testing.B) {
-    for i := 0; i < b.N; i++ {
-       globalSink = &Data{} // Allocating a new object each time
-       globalSink.Values[0] = 42 // Simulating some memory activity
-    }
-}
-
-// dataPool is a sync.Pool that reuses instances of Data to reduce memory allocations.
-var dataPool = sync.Pool{
-    New: func() interface{} {
-        return &Data{}
-    },
-}
-
-// BenchmarkWithPooling measures the performance of using sync.Pool to reuse objects.
-func BenchmarkWithPooling(b *testing.B) {
-    for i := 0; i < b.N; i++ {
-        obj := dataPool.Get().(*Data) // Retrieve from pool
-        obj.Values[0] = 42 // Simulate memory usage
-        dataPool.Put(obj) // Return object to pool for reuse
-        globalSink = obj // Prevents compiler optimizations from removing pooling logic
-    }
-}
-```
-
-### Benchmark Results
+??? example "Show the benchmark file"
+    ```go
+    {% include "01-common-patterns/src/object-pooling_test.go" %}
+    ```
 
 ```
 BenchmarkWithoutPooling-14       1692014               705.4 ns/op          8192 B/op          1 allocs/op
 BenchmarkWithPooling-14         160440506                7.455 ns/op           0 B/op          0 allocs/op
 ```
-
-### Interpreting the Results
 
 The benchmark results highlight the performance and memory usage differences between direct allocations and object pooling. The `BenchmarkWithoutPooling` function demonstrates higher execution time and memory consumption due to frequent heap allocations, resulting in increased garbage collection cycles. A nonzero allocation count confirms that each iteration incurs a heap allocation, contributing to GC overhead and slower performance.
 
@@ -159,6 +116,17 @@ The memory allocation per operation appears larger than expected. Although the s
 
 ## When Should You Use `sync.Pool`?
 
-While `sync.Pool` is a powerful tool for optimizing memory usage, it is most effective in specific scenarios. It is beneficial when objects are expensive to allocate and frequently discarded, such as in networking, database connection management, or high-throughput data processing. In such cases, pooling helps reduce garbage collection overhead and improves performance.
 
-However, `sync.Pool` is not always the best choice. Explicit object management strategies may be more appropriate if objects are long-lived or persist beyond short-lived operations. Additionally, `sync.Pool` clears its contents on every garbage collection cycle, meaning objects that are not frequently reused may not benefit from pooling. The best use case for pooling is when frequent allocations create unnecessary GC pressure, and object reuse offers measurable improvements in efficiency.
+✅ Use sync.Pool when:
+
+- You have short-lived, reusable objects (e.g., buffers, scratch memory, request state).
+- Allocation overhead or GC churn is measurable and significant.
+- The object’s lifecycle is local and can be reset between uses.
+- You want to reduce pressure on the garbage collector in high-throughput systems.
+
+❌ Avoid sync.Pool when:
+
+- Objects are long-lived or shared across multiple goroutines.
+- The reuse rate is low—pooled objects are not frequently accessed.
+- Predictability or lifecycle control is more important than allocation speed.
+- Memory savings are negligible or code complexity increases significantly.
