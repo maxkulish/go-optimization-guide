@@ -14,7 +14,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Frequent system calls for I/O operations can be costly. Using buffered readers, writers (`bufio.Reader`, `bufio.Writer`), and buffered channels reduces the number of calls, improving performance in scenarios involving file or network operations.
 
-4. Goroutine Worker Pools
+4. [Goroutine Worker Pools](./worker-pool.md)
 
 	Spawning goroutines freely might seem appealing, but uncontrolled concurrency can overwhelm the system. Instead, implementing a worker pool allows for controlled execution, limiting resource usage while maintaining throughput.
 

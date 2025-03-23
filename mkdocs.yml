@@ -8,6 +8,8 @@ theme:
   name: material
   palette:
     scheme: default
+  icon:
+    annotation: material/alert-circle
   features:
     - navigation.indexes
     - navigation.instant
@@ -24,6 +26,7 @@ nav:
     - Object Pooling: 01-common-patterns/object-pooling.md
     - Memory Preallocation: 01-common-patterns/mem-prealloc.md
     - Efficient Buffering: 01-common-patterns/buffered-io.md
+    - Goroutine Worker Pools: 01-common-patterns/worker-pool.md
 
 markdown_extensions:
   - toc:
