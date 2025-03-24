@@ -18,7 +18,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Spawning goroutines freely might seem appealing, but uncontrolled concurrency can overwhelm the system. Instead, implementing a worker pool allows for controlled execution, limiting resource usage while maintaining throughput.
 
-5. Batching Operations
+5. [Batching Operations](./batching-ops.md)
 
 	Instead of handling small, frequent operations one at a time, batching them together reduces overhead. This is particularly useful for network requests, database transactions, and disk writes, where reducing the number of round trips significantly enhances performance.
 

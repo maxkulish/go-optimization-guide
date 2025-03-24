@@ -27,6 +27,7 @@ nav:
     - Memory Preallocation: 01-common-patterns/mem-prealloc.md
     - Efficient Buffering: 01-common-patterns/buffered-io.md
     - Goroutine Worker Pools: 01-common-patterns/worker-pool.md
+    - Batching Operations: 01-common-patterns/batching-ops.md
 
 markdown_extensions:
   - toc:
