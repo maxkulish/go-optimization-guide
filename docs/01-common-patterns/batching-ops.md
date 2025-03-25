@@ -76,7 +76,7 @@ This batcher works with any data type, making it a flexible solution for aggrega
 From a performance standpoint, it's true that a lock-free implementation—using atomic operations or concurrent ring buffers—could reduce contention and improve throughput under heavy load. However, such designs are more complex, harder to maintain, and generally not justified unless you're pushing extremely high concurrency or low-latency boundaries. For most practical workloads, the simplicity and safety of a `sync.Mutex`-based design offers a great balance between performance and maintainability.
 
 
-## Benchmarking and Profiling
+## Benchmarking Impact
 
 To validate batching performance, we tested six scenarios across three categories: in-memory processing, file I/O, and CPU-intensive hashing. Each category included both unbatched and batched variants, with all benchmarks running over 10,000 items per operation.
 

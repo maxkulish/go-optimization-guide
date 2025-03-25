@@ -29,6 +29,7 @@ nav:
     - Goroutine Worker Pools: 01-common-patterns/worker-pool.md
     - Batching Operations: 01-common-patterns/batching-ops.md
     - Struct Field Alignment: 01-common-patterns/fields-alignment.md
+    - Avoiding Interface Boxing: 01-common-patterns/interface-boxing.md
 
 markdown_extensions:
   - toc:

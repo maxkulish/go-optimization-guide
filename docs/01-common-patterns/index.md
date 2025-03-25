@@ -26,7 +26,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	The way struct fields are arranged in memory affects cache efficiency. By carefully ordering fields to minimize padding, you can improve memory locality, reduce cache misses, and optimize access speed.
 
-7. Avoiding Interface Boxing
+7. [Avoiding Interface Boxing](./interface-boxing.md)
 
 	Interfaces provide flexibility, but if used improperly, they can introduce hidden allocations. Avoid unnecessary conversions between concrete types and interfaces, as this reduces memory overhead and improves execution speed.
 
