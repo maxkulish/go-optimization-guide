@@ -22,7 +22,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Instead of handling small, frequent operations one at a time, batching them together reduces overhead. This is particularly useful for network requests, database transactions, and disk writes, where reducing the number of round trips significantly enhances performance.
 
-6. Struct Field Alignment
+6. [Struct Field Alignment](./fields-alignment.md)
 
 	The way struct fields are arranged in memory affects cache efficiency. By carefully ordering fields to minimize padding, you can improve memory locality, reduce cache misses, and optimize access speed.
 

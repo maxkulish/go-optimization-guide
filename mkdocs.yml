@@ -28,6 +28,7 @@ nav:
     - Efficient Buffering: 01-common-patterns/buffered-io.md
     - Goroutine Worker Pools: 01-common-patterns/worker-pool.md
     - Batching Operations: 01-common-patterns/batching-ops.md
+    - Struct Field Alignment: 01-common-patterns/fields-alignment.md
 
 markdown_extensions:
   - toc:
