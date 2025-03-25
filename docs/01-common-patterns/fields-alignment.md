@@ -43,6 +43,8 @@ The WellAligned version reduced memory usage by 80MB for 10 million structs and 
 
 In addition to memory layout efficiency, struct alignment also plays a crucial role in concurrent systems. When multiple goroutines access different fields of the same struct that reside on the same CPU cache line, they may suffer from false sharing—where changes to one field cause invalidations in the other, even if logically unrelated.
 
+On modern CPUs, a typical cache line is 64 bytes wide. When a struct is accessed in memory, the CPU loads the entire cache line that contains it, not just the specific field. This means that two unrelated fields within the same 64-byte block will both reside in the same line—even if they are used independently by separate goroutines. If one goroutine writes to its field, the cache line becomes invalidated and must be reloaded on the other core, leading to degraded performance due to false sharing.
+
 To illustrate, we compared two structs—one vulnerable to false sharing, and another with padding to separate fields across cache lines:
 
 ```go
@@ -64,6 +66,8 @@ Each field is incremented by a separate goroutine 1 million times:
 %}
 ```
 
+1. `FalseSharing` and `NoFalseSharing` benchmarks are identical, except we will use `SharedCounterGood` for the `NoFalseSharing` benchmark.
+
 Benchmark Results:
 
 | Benchmark              | ns/op     | B/op | allocs/op |
@@ -72,7 +76,7 @@ Benchmark Results:
 | NoFalseSharing         |   958,180 | 58   | 2         |
 
 
-Placing padding between the two fields prevented false sharing, resulting in a measurable performance improvement. The version with padding completed ~3.8% faster (the value could vary between runs from 3% to 6%), which can make a difference in tight concurrent loops or high-frequency counters. It also shows how false sharing may unpredictably affect memory use due to invalidation overhead.
+Placing padding between the two fields prevented false sharing, resulting in a measurable performance improvement. The version with padding completed ~3.8% faster (the value could vary between re-runs from 3% to 6%), which can make a difference in tight concurrent loops or high-frequency counters. It also shows how false sharing may unpredictably affect memory use due to invalidation overhead.
 
 ??? example "Show the complete benchmark file"
     ```go
@@ -82,7 +86,7 @@ Placing padding between the two fields prevented false sharing, resulting in a m
 
 ## When To Alignment Structs
 
-✅ **ALWAYS** dlignment structs! It's free to implement. No changes except rearrangement are needed!
+✅ **ALWAYS** alignment structs! It's free to implement. No changes except rearrangement are needed!
 
 Guidelines for **struct alignment**:
 
