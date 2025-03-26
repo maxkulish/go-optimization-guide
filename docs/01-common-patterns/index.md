@@ -30,7 +30,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Interfaces provide flexibility, but if used improperly, they can introduce hidden allocations. Avoid unnecessary conversions between concrete types and interfaces, as this reduces memory overhead and improves execution speed.
 
-8. Zero-Copy Techniques
+8. [Zero-Copy Techniques](./zero-copy.md)
 
 	Copying large amounts of data is expensive. You can eliminate unnecessary copying by leveraging slicing and direct byte-buffer manipulations, leading to faster data transfers, particularly in I/O-heavy applications.
 
