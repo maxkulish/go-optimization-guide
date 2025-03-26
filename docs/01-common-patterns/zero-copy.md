@@ -1,4 +1,4 @@
-# Zero-Copy Techniques in Go
+# Zero-Copy Techniques
 
 Managing memory wisely can make a noticeable difference when writing performance-critical Go code. Zero-copy techniques are particularly effective because they avoid unnecessary memory copying by directly manipulating data buffers. By doing so, these techniques significantly enhance throughput and reduce latency, making them highly beneficial for applications that handle intensive I/O operations.
 

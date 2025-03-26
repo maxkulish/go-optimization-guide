@@ -31,6 +31,7 @@ nav:
     - Struct Field Alignment: 01-common-patterns/fields-alignment.md
     - Avoiding Interface Boxing: 01-common-patterns/interface-boxing.md
     - Zero-Copy Techniques: 01-common-patterns/zero-copy.md
+    - Atomic Operations and Synchronization Primitives: 01-common-patterns/atomic-ops.md
 
 markdown_extensions:
   - toc:

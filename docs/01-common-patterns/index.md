@@ -34,7 +34,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Copying large amounts of data is expensive. You can eliminate unnecessary copying by leveraging slicing and direct byte-buffer manipulations, leading to faster data transfers, particularly in I/O-heavy applications.
 
-9. Atomic Operations and Synchronization Primitives
+9. [Atomic Operations and Synchronization Primitives](./atomic-ops.md)
 
 	Synchronization mechanisms such as `sync.Mutex` and `sync.RWMutex` prevents race conditions, but they can also cause contention. Where possible, atomic operations (sync/atomic) provide a lock-free way to manage shared state efficiently.
 
@@ -49,3 +49,19 @@ Optimizing Go applications requires understanding common patterns that help redu
 12. Immutable Data Sharing
 
 	When multiple goroutines need access to the same data, making it immutable prevents the need for locks, reduces contention, and allows concurrent reads without blocking.
+
+13. Managing Goroutine Lifecycles
+	Strategies for reusing goroutines, limiting goroutine churn, and reducing scheduling overhead, measured via pprof scheduler traces and latency metrics.
+
+14. Reducing Allocation Pressure with sync.Pool
+	
+	Practical strategies for leveraging Go’s object pooling mechanisms to reduce garbage collection overhead, measurable via GC stats.
+
+15. Leveraging Compiler Optimization Flags
+	
+	Using Go compiler flags (-gcflags, -ldflags) effectively for performance tuning.
+
+16. Optimizing Network I/O
+
+	Best practices for connection pooling, buffer reuse, and tuning TCP stack settings for latency-sensitive or throughput-heavy services, validated through network benchmarks and latency percentiles.
+
