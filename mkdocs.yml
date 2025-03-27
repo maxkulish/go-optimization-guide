@@ -33,6 +33,7 @@ nav:
     - Zero-Copy Techniques: 01-common-patterns/zero-copy.md
     - Atomic Operations and Synchronization Primitives: 01-common-patterns/atomic-ops.md
     - Lazy Initialization: 01-common-patterns/lazy-init.md
+    - Efficient Context Management: 01-common-patterns/context.md
 
 markdown_extensions:
   - toc:
@@ -43,7 +44,11 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.tilde
   - pymdownx.details
-
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 plugins:
   - search
   - git-revision-date-localized

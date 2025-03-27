@@ -42,7 +42,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Some resources are expensive to initialize, yet they might only be needed occasionally. Using `sync.Once` ensures that such operations are performed only when necessary and executed just once, avoiding redundant computation.
 
-11. Efficient Context Management
+11. [Efficient Context Management](./context.md)
 
 	Properly managing timeouts and cancellations prevents wasted computation and improves responsiveness. The `context` package allows you to propagate deadlines across goroutines, ensuring resources are released as soon as they are no longer needed.
 
