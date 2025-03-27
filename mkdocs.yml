@@ -34,6 +34,7 @@ nav:
     - Atomic Operations and Synchronization Primitives: 01-common-patterns/atomic-ops.md
     - Lazy Initialization: 01-common-patterns/lazy-init.md
     - Efficient Context Management: 01-common-patterns/context.md
+    - Immutable Data Sharing: 01-common-patterns/immutable-data.md
 
 markdown_extensions:
   - toc:

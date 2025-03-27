@@ -1,4 +1,4 @@
-# Efficient Context Management in Go
+# Efficient Context Management
 
 Whether you're handling HTTP requests, coordinating worker goroutines, or querying external services, there's often a need to cancel in-flight operations or enforce execution deadlines. Go’s `context` package is designed for precisely that—it provides a consistent and thread-safe way to manage operation lifecycles, propagate metadata, and ensure resources are cleaned up promptly.
 

@@ -46,7 +46,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Properly managing timeouts and cancellations prevents wasted computation and improves responsiveness. The `context` package allows you to propagate deadlines across goroutines, ensuring resources are released as soon as they are no longer needed.
 
-12. Immutable Data Sharing
+12. [Immutable Data Sharing](./immutable-data.md)
 
 	When multiple goroutines need access to the same data, making it immutable prevents the need for locks, reduces contention, and allows concurrent reads without blocking.
 
