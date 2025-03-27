@@ -83,15 +83,14 @@ Placing padding between the two fields prevented false sharing, resulting in a m
     {% include "01-common-patterns/src/fields-alignment_test.go" %}
     ```
 
+## When To Align Structs
 
-## When To Alignment Structs
+✅ Always align structs. It's free to implement and often leads to better memory efficiency without changing any logic—only field order needs to be adjusted.
 
-✅ **ALWAYS** alignment structs! It's free to implement. No changes except rearrangement are needed!
+Guidelines for struct alignment:
 
-Guidelines for **struct alignment**:
-
-- Order fields by decreasing size to reduce internal padding.
-- Group same-sized fields together to optimize memory layout.
-- Use padding deliberately to separate fields accessed by different goroutines.
-- Avoid interleaving small and large fields.
-- Use [fieldalignment](https://pkg.go.dev/golang.org/x/tools/go/analysis/passes/fieldalignment) linter to verify.
+- Order fields by decreasing size to reduce internal padding. Larger fields first help prevent unnecessary gaps caused by alignment rules.
+- Group same-sized fields together to optimize memory layout. This ensures fields can be packed tightly without additional padding.
+- Use padding deliberately to separate fields accessed by different goroutines. Preventing false sharing can improve performance in concurrent applications.
+- Avoid interleaving small and large fields. Mixing sizes leads to inefficient memory usage due to extra alignment padding between fields.
+- Use the [fieldalignment](https://pkg.go.dev/golang.org/x/tools/go/analysis/passes/fieldalignment) linter to verify. This tool helps catch suboptimal layouts automatically during development.

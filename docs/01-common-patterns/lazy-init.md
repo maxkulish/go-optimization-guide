@@ -1,6 +1,6 @@
 ## Lazy Initialization for Performance in Go
 
-Lazy initialization is a powerful technique used to delay the creation of resources until they're genuinely needed. In high-performance Go applications, lazy initialization helps reduce memory usage, shorten startup time, and improve overall responsiveness.
+In Go, some resources are expensive to initialize, or simply unnecessary unless certain code paths are triggered. That’s where lazy initialization becomes useful: it defers the construction of a value until the moment it’s actually needed. This pattern can improve performance, reduce startup overhead, and avoid unnecessary work—especially in high-concurrency applications.
 
 ### Why Lazy Initialization Matters
 
@@ -58,7 +58,7 @@ There is typically nothing specific to benchmark with lazy initialization itself
 
 ## When to Choose Lazy Initialization
 
-- When resource initialization is costly or involves I/O
-- To improve startup performance and memory efficiency
-- When not all resources are needed immediately or at all during runtime
-- To guarantee a block of code executes exactly once despite repeated calls
+- When resource initialization is costly or involves I/O. Delaying construction avoids paying the cost of setup—like opening files, querying databases, or loading large structures—unless it’s actually needed.
+- To improve startup performance and memory efficiency. Deferring work until first use allows your application to start faster and avoid allocating memory for resources that may never be used.
+- When not all resources are needed immediately or at all during runtime. Lazy initialization helps you avoid initializing fields or services that only apply in specific code paths.
+- To guarantee a block of code executes exactly once despite repeated calls. Using tools like `sync.Once` ensures thread-safe, one-time setup in concurrent environments.

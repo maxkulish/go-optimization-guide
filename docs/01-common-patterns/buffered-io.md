@@ -68,16 +68,15 @@ Results:
 BenchmarkWriteNotBuffered-14                  49          23672792 ns/op           53773 B/op      10007 allocs/op
 BenchmarkWriteBuffered-14                   3241            379703 ns/op           70127 B/op      10008 allocs/op
 ```
-
 ## When To Buffer
 
 ✅ Use buffering when:
 
-- Performing frequent, small-sized I/O operations.
-- Reducing syscall overhead is crucial.
-- High throughput is more important than minimal latency.
+- Performing frequent, small-sized I/O operations. Buffering groups small writes or reads into larger batches, which reduces the overhead of each individual operation.
+- Reducing syscall overhead is crucial. Fewer syscalls mean lower context-switching costs and improved performance, especially in I/O-heavy applications.
+- High throughput is more important than minimal latency. Buffered I/O can increase total data processed per second, even if it introduces slight delays in delivery.
 
 ❌ Avoid buffering when:
 
-- Immediate data availability and low latency are critical.
-- Buffering excessively might lead to uncontrolled memory usage.
+- Immediate data availability and low latency are critical. Buffers introduce delays by design, which can be unacceptable in real-time or interactive systems.
+- Buffering excessively might lead to uncontrolled memory usage. Without limits or proper flushing, buffers can grow large and put pressure on system memory.

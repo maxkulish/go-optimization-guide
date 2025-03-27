@@ -1,6 +1,8 @@
 # Memory Preallocation
 
-Memory preallocation is a powerful and straightforward optimization technique in Go. By explicitly allocating required memory upfront, developers reduce hidden costs associated with dynamic resizing—such as frequent memory allocations, data copying, and increased garbage collection (GC) activity. Effective preallocation leads to predictable, efficient performance, especially crucial for performance-critical or high-throughput systems.
+Memory preallocation is a practical way to improve performance in Go programs that deal with growing slices or maps. By allocating enough space upfront, you can avoid the overhead of repeated resizing, which often involves memory allocation, data copying, and extra work for the garbage collector.
+
+In high-throughput or performance-sensitive code, preallocating memory helps keep execution predictable and efficient, especially when working with large or known workloads.
 
 ## Why Preallocation Matters
 
@@ -92,17 +94,16 @@ You’ll typically observe that preallocation reduces allocations to a single on
 BenchmarkAppendNoPrealloc-14               41727             28539 ns/op          357626 B/op         19 allocs/op
 BenchmarkAppendWithPrealloc-14            170154              7093 ns/op           81920 B/op          1 allocs/op
 ```
-
 ## When To Preallocate
 
 ✅ Preallocate when:
 
-- The number of elements in slices or maps is known or reasonably predictable.
-- Your application involves tight loops or high-throughput data processing.
-- Minimizing garbage collection overhead is crucial for your application's performance.
+- The number of elements in slices or maps is known or reasonably predictable. Allocating memory up front avoids the cost of repeated resizing as the data structure grows.
+- Your application involves tight loops or high-throughput data processing. Preallocation reduces per-iteration overhead and helps maintain steady performance under load.
+- Minimizing garbage collection overhead is crucial for your application's performance. Fewer allocations mean less work for the garbage collector, resulting in lower latency and more consistent behavior.
 
 ❌ Avoid preallocation when:
 
-- The data size is highly variable and unpredictable.
-- Over-allocation risks significant memory waste.
-- You're prematurely optimizing—always profile to confirm the benefit.
+- The data size is highly variable and unpredictable. Allocating too much or too little memory can either waste resources or negate the performance benefit.
+- Over-allocation risks significant memory waste. Reserving more memory than needed can increase your application’s footprint unnecessarily.
+- You're prematurely optimizing—always profile to confirm the benefit. Preallocation is helpful, but only when it solves a real, measurable problem in your workload.

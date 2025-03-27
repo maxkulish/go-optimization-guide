@@ -1,6 +1,6 @@
 # Batching Operations in Go
 
-Batching operations is a powerful performance optimization technique often overlooked in high-throughput Go applications. Rather than performing each expensive operation individually, batching consolidates multiple operations into a single call. This strategy dramatically reduces overhead, whether it's network latency, file system I/O, database transactions, or even CPU-intensive processing.
+Batching is a simple but effective way to boost performance in high-throughput Go applications. By grouping multiple operations into a single call, you can minimize repeated overhead—from network round-trips and disk I/O to database commits and CPU cycles. It’s a practical technique that can make a big difference in both latency and resource usage.
 
 ## Why Batching Matters
 
@@ -98,17 +98,16 @@ In-memory string manipulation showed a modest performance delta. While the batch
 File I/O benchmarks showed the most dramatic gains. The batched version was over 12 times faster than the unbatched one, with far fewer syscalls and significantly lower execution time. Grouping disk writes amortized the I/O cost, leading to a huge efficiency boost despite temporarily using more memory.
 
 The cryptographic benchmarks demonstrated batching’s value in CPU-bound scenarios. Batched hashing nearly halved the total processing time while reducing allocation count by more than 70x. This reinforces batching as an effective strategy even in CPU-intensive workloads where fewer operations yield better locality and cache behavior.
-
 ## When To Use Batching
 
-✅  Use batching when:
+✅ Use batching when:
 
-- Individual operations are expensive (e.g., I/O, RPC, DB writes)
-- The system benefits from reducing the frequency of external interactions
-- You have some tolerance for per-item latency in favor of higher throughput
+- Individual operations are expensive (e.g., I/O, RPC, DB writes). Grouping multiple operations into a single batch reduces the overhead of repeated calls and improves efficiency.
+- The system benefits from reducing the frequency of external interactions. Fewer external calls can ease load on downstream systems and reduce contention or rate-limiting issues.
+- You have some tolerance for per-item latency in favor of higher throughput. Batching introduces slight delays but can significantly increase overall system throughput.
 
 ❌ Avoid batching when:
 
-- Immediate action is required for each individual input
-- Holding data introduces risk (e.g., crash before flush)
-- Predictable latency is more important than throughput
+- Immediate action is required for each individual input. Delaying processing to build a batch may violate time-sensitive requirements.
+- Holding data introduces risk (e.g., crash before flush). If data must be processed or persisted immediately to avoid loss, batching can be unsafe.
+- Predictable latency is more important than throughput. Batching adds variability in timing, which may not be acceptable in systems with strict latency expectations.

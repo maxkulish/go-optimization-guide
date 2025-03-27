@@ -182,7 +182,7 @@ Rather than presenting artificial benchmarks here, we recommend reviewing the re
 
 ## When to Use This Pattern
 
-Immutable data sharing is ideal when:
+✅ Immutable data sharing is ideal when:
 
 - The data is read-heavy and write-light (e.g., configuration, feature flags, global mappings). This works well because the cost of creating new immutable versions is amortized over many reads, and avoiding locks provides a performance boost.
 
@@ -190,4 +190,4 @@ Immutable data sharing is ideal when:
 
 - You can tolerate minor delays between update and read (eventual consistency). Since data updates are not coordinated with readers, there might be a small delay before all goroutines see the new version. If exact timing isn't critical, this tradeoff simplifies your concurrency model.
 
-It’s less suitable when updates must be transactional across multiple pieces of data or happen frequently. In those cases, the cost of repeated copying or lack of coordination can outweigh the benefits.
+❌ It’s less suitable when updates must be transactional across multiple pieces of data or happen frequently. In those cases, the cost of repeated copying or lack of coordination can outweigh the benefits.

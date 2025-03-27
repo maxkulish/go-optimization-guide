@@ -1,8 +1,8 @@
 # mkdocs.yml - Configuration for MkDocs
 
 site_name: Go Performance Patterns
-repo_url: https://github.com/astavonin/go-performance-book
-site_url: https://astavonin.github.io/go-performance-book/
+repo_url: https://github.com/astavonin/go-optimization-guide
+site_url: https://goperf.dev
 
 theme:
   name: material

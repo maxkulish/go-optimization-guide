@@ -164,6 +164,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 This pattern avoids the need for shared state between middleware and handlers. Instead, the context acts as a lightweight channel for passing metadata between layers of the request pipeline in a safe and composable way.
 
+## Benchmarking Impact
+
+There's usually nothing to benchmark directly in terms of raw performance when using `context.Context`. Its real benefit lies in improving responsiveness, avoiding wasted computation, and enabling clean cancellations. The impact shows up in reduced memory leaks, fewer stuck goroutines, and more predictable resource lifetimes—metrics best observed through real-world profiling and observability tools.
+
 ## Best Practices for Context Usage
 
 - Always pass `context.Context` explicitly, typically as the first argument to a function. This makes context propagation transparent and traceable, especially across API boundaries or service layers.
@@ -173,6 +177,3 @@ Don’t store contexts in struct fields or global variables. Doing so can lead t
 
 Following these practices helps keep context usage predictable and idiomatic.
 
-## Benchmarking Impact
-
-There's usually nothing to benchmark directly in terms of raw performance when using `context.Context`. Its real benefit lies in improving responsiveness, avoiding wasted computation, and enabling clean cancellations. The impact shows up in reduced memory leaks, fewer stuck goroutines, and more predictable resource lifetimes—metrics best observed through real-world profiling and observability tools.

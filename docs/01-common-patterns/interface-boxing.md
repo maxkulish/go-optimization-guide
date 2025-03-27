@@ -1,10 +1,8 @@
 # Avoiding Interface Boxing
 
-Interfaces in Go are a powerful abstraction mechanism, enabling polymorphism and decoupled designs. But this flexibility comes with a hidden cost. When a value is assigned to an interface, Go performs what’s known as interface boxing—wrapping the value in a structure that holds type information and a pointer to the actual data.
+Go’s interfaces make it easy to write flexible, decoupled code. But behind that convenience is a detail that can trip up performance: when a concrete value is assigned to an interface, Go wraps it in a hidden structure—a process called interface boxing.
 
-Boxing may seem harmless, but in performance-critical code paths it can lead to hidden heap allocations, unnecessary memory copying, and garbage collection pressure. These issues often go unnoticed until they surface as latency spikes or memory inefficiencies in production.
-
-Understanding when boxing happens—and how to avoid it—can significantly improve the efficiency of your Go application.
+In many cases, boxing is harmless. But in performance-sensitive code—like tight loops, hot paths, or high-throughput services—it can introduce hidden heap allocations, extra memory copying, and added pressure on the garbage collector. These effects often go unnoticed during development, only showing up later as latency spikes or memory bloat.
 
 ## What is Interface Boxing?
 
@@ -165,19 +163,12 @@ Use boxing when it supports clarity, reusability, or design goals—and avoid it
 
 ## How to Avoid Interface Boxing
 
-- Use pointers when assigning to interfaces:
-   If the method set requires a pointer receiver or the value is large, explicitly pass a pointer to avoid repeated copying and heap allocation.
+- Use pointers when assigning to interfaces. If the method set requires a pointer receiver or the value is large, explicitly pass a pointer to avoid repeated copying and heap allocation.
     ```go
     for i := range tasks {
        result = append(result, &tasks[i]) // Avoids boxing copies
     }
     ```
-
-- Avoid interfaces in hot paths:
-   If the concrete type is known and stable, avoid interface indirection entirely—especially in compute-intensive or allocation-sensitive functions.
-
-- **Use type-specific containers**:
-   Instead of `[]interface{}`, prefer generic slices or typed collections where feasible. This preserves static typing and reduces unnecessary allocations.
-
-- **Benchmark and inspect with pprof**:
-   Use `go test -bench` and `pprof` to observe where allocations occur. If the allocation site is in `runtime.convT2E` (convert T to interface), you're likely boxing.
+- Avoid interfaces in hot paths. If the concrete type is known and stable, avoid interface indirection entirely—especially in compute-intensive or allocation-sensitive functions.
+- Use type-specific containers. Instead of `[]interface{}`, prefer generic slices or typed collections where feasible. This preserves static typing and reduces unnecessary allocations.
+- Benchmark and inspect with pprof. Use `go test -bench` and `pprof` to observe where allocations occur. If the allocation site is in `runtime.convT2E` (convert T to interface), you're likely boxing.
