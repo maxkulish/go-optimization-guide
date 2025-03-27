@@ -32,6 +32,7 @@ nav:
     - Avoiding Interface Boxing: 01-common-patterns/interface-boxing.md
     - Zero-Copy Techniques: 01-common-patterns/zero-copy.md
     - Atomic Operations and Synchronization Primitives: 01-common-patterns/atomic-ops.md
+    - Lazy Initialization: 01-common-patterns/lazy-init.md
 
 markdown_extensions:
   - toc:

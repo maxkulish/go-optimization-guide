@@ -38,7 +38,7 @@ Optimizing Go applications requires understanding common patterns that help redu
 
 	Synchronization mechanisms such as `sync.Mutex` and `sync.RWMutex` prevents race conditions, but they can also cause contention. Where possible, atomic operations (sync/atomic) provide a lock-free way to manage shared state efficiently.
 
-10. Lazy Initialization (`sync.Once`)
+10. [Lazy Initialization (`sync.Once`)](./lazy-init.md)
 
 	Some resources are expensive to initialize, yet they might only be needed occasionally. Using `sync.Once` ensures that such operations are performed only when necessary and executed just once, avoiding redundant computation.
 
