@@ -1,6 +1,6 @@
 # mkdocs.yml - Configuration for MkDocs
 
-site_name: Go Performance Patterns
+site_name: Go Optimization Guide
 repo_url: https://github.com/astavonin/go-optimization-guide
 site_url: https://goperf.dev
 
@@ -14,27 +14,38 @@ theme:
     - navigation.indexes
     - navigation.instant
     - navigation.tracking
+    - navigation.expand
+    - navigation.path
     - search.suggest
     - search.highlight
     - content.code.copy
     - content.code.annotate
+    - toc.follow
 
 nav:
   - Home: index.md
   - Common Go Patterns for Performance:
-    - Common Go Patterns for Performance: 01-common-patterns/index.md
-    - Object Pooling: 01-common-patterns/object-pooling.md
-    - Memory Preallocation: 01-common-patterns/mem-prealloc.md
-    - Efficient Buffering: 01-common-patterns/buffered-io.md
-    - Goroutine Worker Pools: 01-common-patterns/worker-pool.md
-    - Batching Operations: 01-common-patterns/batching-ops.md
-    - Struct Field Alignment: 01-common-patterns/fields-alignment.md
-    - Avoiding Interface Boxing: 01-common-patterns/interface-boxing.md
-    - Zero-Copy Techniques: 01-common-patterns/zero-copy.md
-    - Atomic Operations and Synchronization Primitives: 01-common-patterns/atomic-ops.md
-    - Lazy Initialization: 01-common-patterns/lazy-init.md
-    - Efficient Context Management: 01-common-patterns/context.md
-    - Immutable Data Sharing: 01-common-patterns/immutable-data.md
+    - 01-common-patterns/index.md
+    - Memory Management & Efficiency:
+      - Object Pooling: 01-common-patterns/object-pooling.md
+      - Memory Preallocation: 01-common-patterns/mem-prealloc.md
+      - Struct Field Alignment: 01-common-patterns/fields-alignment.md
+      - Avoiding Interface Boxing: 01-common-patterns/interface-boxing.md
+      - Zero-Copy Techniques: 01-common-patterns/zero-copy.md
+      - Memory Efficiency and Go’s Garbage Collector: 01-common-patterns/gc.md
+      - Stack Allocations and Escape Analysis: 01-common-patterns/stack-alloc.md
+    - Concurrency and Synchronization:
+      - Goroutine Worker Pools: 01-common-patterns/worker-pool.md
+      - Atomic Operations and Synchronization Primitives: 01-common-patterns/atomic-ops.md
+      - Lazy Initialization: 01-common-patterns/lazy-init.md
+      - Immutable Data Sharing: 01-common-patterns/immutable-data.md
+      - Efficient Context Management: 01-common-patterns/context.md
+    - I/O Optimization and Throughput:
+      - Efficient Buffering: 01-common-patterns/buffered-io.md
+      - Batching Operations: 01-common-patterns/batching-ops.md
+    - Compiler-Level Optimization and Tuning:
+      - Leveraging Compiler Optimization Flags: 01-common-patterns/comp-flags.md
+      - Stack Allocations and Escape Analysis: 01-common-patterns/stack-alloc.md
 
 markdown_extensions:
   - toc:

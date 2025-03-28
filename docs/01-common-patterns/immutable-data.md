@@ -178,7 +178,7 @@ You load and manipulate data in staging under a mutex, then convert to an immuta
 
 Benchmarking immutable data sharing in real-world systems is difficult to do in a generic, meaningful way. Factors like structure size, read/write ratio, and memory layout all heavily influence results.
 
-Rather than presenting artificial benchmarks here, we recommend reviewing the results in the [Atomic Operations and Synchronization Primitives](./atomic-ops.md/#performance-benchmarking) article. Those benchmarks clearly illustrate the potential performance benefits of using atomic.Value over traditional synchronization primitives like sync.RWMutex, especially in highly concurrent read scenarios.
+Rather than presenting artificial benchmarks here, we recommend reviewing the results in the [Atomic Operations and Synchronization Primitives](./atomic-ops.md/#benchmarking-impact) article. Those benchmarks clearly illustrate the potential performance benefits of using atomic.Value over traditional synchronization primitives like sync.RWMutex, especially in highly concurrent read scenarios.
 
 ## When to Use This Pattern
 

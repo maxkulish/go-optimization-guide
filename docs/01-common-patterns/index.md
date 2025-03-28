@@ -1,67 +1,75 @@
 # Common Go Patterns for Performance
 
-Optimizing Go applications requires understanding common patterns that help reduce latency, improve memory efficiency, and enhance concurrency. Below are twelve key strategies experienced Go developers use to write high-performance code.
+Optimizing Go applications requires understanding common patterns that help reduce latency, improve memory efficiency, and enhance concurrency. This guide organizes 15 key techniques into four practical categories.
 
-1. [Object Pooling](./object-pooling.md)
+---
 
-	Allocating and deallocating objects repeatedly can put unnecessary strain on the garbage collector. A better approach is to reuse objects by implementing an object pool. This is particularly effective for large data structures or high-throughput workloads where reducing allocation overhead makes a significant impact.
+## Memory Management & Efficiency
 
-2. [Memory Preallocation](./mem-prealloc.md)
+These strategies help reduce memory churn, avoid excessive allocations, and improve cache behavior.
 
-	Dynamic memory growth can lead to frequent reallocations, slowing down execution. Preallocating slices and maps using `make` ensures efficient memory usage and helps prevent performance penalties in tight loops.
+- [Object Pooling](./object-pooling.md)  
+  Reuse objects to reduce GC pressure and allocation overhead.
 
-3. [Efficient Buffering](./buffered-io.md)
+- [Memory Preallocation](./mem-prealloc.md)  
+  Allocate slices and maps with capacity upfront to avoid costly resizes.
 
-	Frequent system calls for I/O operations can be costly. Using buffered readers, writers (`bufio.Reader`, `bufio.Writer`), and buffered channels reduces the number of calls, improving performance in scenarios involving file or network operations.
+- [Struct Field Alignment](./fields-alignment.md)  
+  Optimize memory layout to minimize padding and improve locality.
 
-4. [Goroutine Worker Pools](./worker-pool.md)
+- [Avoiding Interface Boxing](./interface-boxing.md)  
+  Prevent hidden allocations by avoiding unnecessary interface conversions.
 
-	Spawning goroutines freely might seem appealing, but uncontrolled concurrency can overwhelm the system. Instead, implementing a worker pool allows for controlled execution, limiting resource usage while maintaining throughput.
+- [Zero-Copy Techniques](./zero-copy.md)  
+  Minimize data copying with slicing and buffer tricks.
 
-5. [Batching Operations](./batching-ops.md)
+- [Memory Efficiency and Go’s Garbage Collector](./gc.md)  
+  Reduce GC overhead by minimizing heap usage and reusing memory.
 
-	Instead of handling small, frequent operations one at a time, batching them together reduces overhead. This is particularly useful for network requests, database transactions, and disk writes, where reducing the number of round trips significantly enhances performance.
+- [Stack Allocations and Escape Analysis](./stack-alloc.md)  
+  Use escape analysis to help values stay on the stack where possible.
 
-6. [Struct Field Alignment](./fields-alignment.md)
+---
 
-	The way struct fields are arranged in memory affects cache efficiency. By carefully ordering fields to minimize padding, you can improve memory locality, reduce cache misses, and optimize access speed.
+## Concurrency and Synchronization
 
-7. [Avoiding Interface Boxing](./interface-boxing.md)
+Manage goroutines, shared resources, and coordination efficiently.
 
-	Interfaces provide flexibility, but if used improperly, they can introduce hidden allocations. Avoid unnecessary conversions between concrete types and interfaces, as this reduces memory overhead and improves execution speed.
+- [Goroutine Worker Pools](./worker-pool.md)  
+  Control concurrency with a fixed-size pool to limit resource usage.
 
-8. [Zero-Copy Techniques](./zero-copy.md)
+- [Atomic Operations and Synchronization Primitives](./atomic-ops.md)  
+  Use atomic operations or lightweight locks to manage shared state.
 
-	Copying large amounts of data is expensive. You can eliminate unnecessary copying by leveraging slicing and direct byte-buffer manipulations, leading to faster data transfers, particularly in I/O-heavy applications.
+- [Lazy Initialization (`sync.Once`)](./lazy-init.md)  
+  Delay expensive setup logic until it's actually needed.
 
-9. [Atomic Operations and Synchronization Primitives](./atomic-ops.md)
+- [Immutable Data Sharing](./immutable-data.md)  
+  Share data safely between goroutines without locks by making it immutable.
 
-	Synchronization mechanisms such as `sync.Mutex` and `sync.RWMutex` prevents race conditions, but they can also cause contention. Where possible, atomic operations (sync/atomic) provide a lock-free way to manage shared state efficiently.
+- [Efficient Context Management](./context.md)  
+  Use `context` to propagate timeouts and cancel signals across goroutines.
 
-10. [Lazy Initialization (`sync.Once`)](./lazy-init.md)
+---
 
-	Some resources are expensive to initialize, yet they might only be needed occasionally. Using `sync.Once` ensures that such operations are performed only when necessary and executed just once, avoiding redundant computation.
+## I/O Optimization and Throughput
 
-11. [Efficient Context Management](./context.md)
+Reduce system call overhead and increase data throughput for I/O-heavy workloads.
 
-	Properly managing timeouts and cancellations prevents wasted computation and improves responsiveness. The `context` package allows you to propagate deadlines across goroutines, ensuring resources are released as soon as they are no longer needed.
+- [Efficient Buffering](./buffered-io.md)  
+  Use buffered readers/writers to minimize I/O calls.
 
-12. [Immutable Data Sharing](./immutable-data.md)
+- [Batching Operations](./batching-ops.md)  
+  Combine multiple small operations to reduce round trips and improve throughput.
 
-	When multiple goroutines need access to the same data, making it immutable prevents the need for locks, reduces contention, and allows concurrent reads without blocking.
+---
 
-13. Managing Goroutine Lifecycles
-	Strategies for reusing goroutines, limiting goroutine churn, and reducing scheduling overhead, measured via pprof scheduler traces and latency metrics.
+## Compiler-Level Optimization and Tuning
 
-14. Reducing Allocation Pressure with sync.Pool
-	
-	Practical strategies for leveraging Go’s object pooling mechanisms to reduce garbage collection overhead, measurable via GC stats.
+Tap into Go’s compiler and linker to further optimize your application.
 
-15. Leveraging Compiler Optimization Flags
-	
-	Using Go compiler flags (-gcflags, -ldflags) effectively for performance tuning.
+- [Leveraging Compiler Optimization Flags](./comp-flags.md)  
+  Use build flags like `-gcflags` and `-ldflags` for performance tuning.
 
-16. Optimizing Network I/O
-
-	Best practices for connection pooling, buffer reuse, and tuning TCP stack settings for latency-sensitive or throughput-heavy services, validated through network benchmarks and latency percentiles.
-
+- [Stack Allocations and Escape Analysis](./stack-alloc.md)  
+  Analyze which values escape to the heap to help the compiler optimize memory placement.
