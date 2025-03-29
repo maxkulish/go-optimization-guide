@@ -6,8 +6,6 @@ While Go doesn’t expose as many knobs for performance tuning as languages like
 
 We focus on **concrete techniques** you can apply immediately—covering everything from core language features to advanced networking strategies.
 
----
-
 ## 📌 What’s Covered So Far
 
 ### [Common Go Patterns for Performance](./01-common-patterns/index.md)
@@ -25,7 +23,7 @@ Each pattern is grounded in practical use cases, with benchmarks and examples yo
 
 ---
 
-## 🚀 What’s Coming Next
+## 🔜 What’s Coming Next
 
 ### High-Performance Networking in Go *(working title)*
 
