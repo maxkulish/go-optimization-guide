@@ -32,7 +32,7 @@ We benchmarked both struct layouts by allocating 10 million instances of each an
 
 Benchmark Results
 
-| Benchmark              | Iterations | ns/op       | B/op        | allocs/op |
+| Benchmark               | Iterations  | Time per op (ns) | Bytes per op | Allocs per op |
 |------------------------|------------|-------------|-------------|------------|
 | PoorlyAligned-14       | 177        | 20,095,621  | 240,001,029 | 1          |
 | WellAligned-14         | 186        | 19,265,714  | 160,006,148 | 1          |
@@ -70,7 +70,7 @@ Each field is incremented by a separate goroutine 1 million times:
 
 Benchmark Results:
 
-| Benchmark              | ns/op     | B/op | allocs/op |
+| Benchmark               | Time per op (ns) | Bytes per op | Allocs per op |
 |------------------------|-----------|------|-----------|
 | FalseSharing           |   996,234 | 55   | 2         |
 | NoFalseSharing         |   958,180 | 58   | 2         |

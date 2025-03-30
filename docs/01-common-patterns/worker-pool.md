@@ -78,10 +78,12 @@ Worker pools shine in scenarios where the workload is CPU-bound or where concurr
     ```
 
 Results:
-```
-BenchmarkUnboundedGoroutines-14             2274           2499213 ns/op          639350 B/op      39754 allocs/op
-BenchmarkWorkerPool-14                      3325           1791772 ns/op          320707 B/op      19762 allocs/op
-```
+
+| Benchmark               | Iterations  | Time per op (ns) | Bytes per op | Allocs per op |
+|------------------------------|------------|-------------|----------|-----------|
+| BenchmarkUnboundedGoroutines-14 | 2,274      | 2,499,213 ns | 639,350  | 39,754    |
+| BenchmarkWorkerPool-14         | 3,325      | 1,791,772 ns | 320,707  | 19,762    |
+
 In our benchmark, each task performed a CPU-intensive operation (e.g., cryptographic hashing, math, or serialization). With `workerCount = 10` on an Apple M3 Max machine, the worker pool outperformed the unbounded goroutine model by a significant margin, using fewer resources and completing work faster. Increasing the worker count beyond the number of available cores led to worse performance due to contention.
 
 ## When To Use Worker Pools

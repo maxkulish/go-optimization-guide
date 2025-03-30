@@ -85,17 +85,24 @@ To validate batching performance, we tested six scenarios across three categorie
     {% include "01-common-patterns/src/batching-ops_test.go" %}
     ```
 
-```
-BenchmarkUnbatchedProcessing-14              530           2028492 ns/op         1279850 B/op      10000 allocs/op
-BenchmarkBatchedProcessing-14                573           2094168 ns/op         2457603 B/op        200 allocs/op
-BenchmarkUnbatchedIO-14                       87          12766433 ns/op         1280424 B/op      10007 allocs/op
-BenchmarkBatchedIO-14                       1324            993912 ns/op         2458026 B/op        207 allocs/op
-BenchmarkUnbatchedCrypto-14                  978           1232242 ns/op         2559840 B/op      30000 allocs/op
-BenchmarkBatchedCrypto-14                   1760            675303 ns/op         2470406 B/op        400 allocs/op
-```
+| Benchmark                        | Iterations   | Time per op (ns) | Bytes per op | Allocs per op |
+|----------------------------------|-----|------------------|---------------|----------------|
+| BenchmarkUnbatchedProcessing-14 | 530 | 2,028,492        | 1,279,850     | 10,000         |
+| BenchmarkBatchedProcessing-14   | 573 | 2,094,168        | 2,457,603     | 200            |
+
 In-memory string manipulation showed a modest performance delta. While the batched variant reduced memory allocations by 50x, the execution time was only marginally slower due to the cost of joining large strings. This highlights that batching isn’t always faster in raw throughput, but it consistently reduces pressure on the garbage collector.
 
+| Benchmark                        | Iterations   | Time per op (ns) | Bytes per op | Allocs per op |
+|----------------------------------|-----|------------------|---------------|----------------|
+| BenchmarkUnbatchedIO-14         | 87  | 12,766,433       | 1,280,424     | 10,007         |
+| BenchmarkBatchedIO-14           | 1324| 993,912          | 2,458,026     | 207            |
+
 File I/O benchmarks showed the most dramatic gains. The batched version was over 12 times faster than the unbatched one, with far fewer syscalls and significantly lower execution time. Grouping disk writes amortized the I/O cost, leading to a huge efficiency boost despite temporarily using more memory.
+
+| Benchmark                        | Iterations   | Time per op (ns) | Bytes per op | Allocs per op |
+|----------------------------------|-----|------------------|---------------|----------------|
+| BenchmarkUnbatchedCrypto-14     | 978 | 1,232,242        | 2,559,840     | 30,000         |
+| BenchmarkBatchedCrypto-14       | 1760| 675,303          | 2,470,406     | 400            |
 
 The cryptographic benchmarks demonstrated batching’s value in CPU-bound scenarios. Batched hashing nearly halved the total processing time while reducing allocation count by more than 70x. This reinforces batching as an effective strategy even in CPU-intensive workloads where fewer operations yield better locality and cache behavior.
 ## When To Use Batching

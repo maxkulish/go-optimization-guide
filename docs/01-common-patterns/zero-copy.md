@@ -74,7 +74,7 @@ In `BenchmarkCopy`, a 64KB buffer is copied into a new slice during every iterat
 !!! info
 	These two functions are not equivalent in behavior—`BenchmarkCopy` makes an actual deep copy of the buffer, while `BenchmarkSlice` only creates a new slice header pointing to the same underlying data. This benchmark is not comparing functional correctness but is intentionally contrasting performance characteristics to highlight the cost of unnecessary copying.
 
-	| Benchmark                | ns/op   | B/op  | allocs/op |
+	| Benchmark                | Time per op (ns) | Bytes per op | Allocs per op |
 	|--------------------------|---------|--------|------------|
 	| BenchmarkCopy            | 4,246   | 65536 | 1          |
 	| BenchmarkSlice           | 0.592   | 0     | 0          |
@@ -103,7 +103,7 @@ We also benchmarked file reading performance using `os.ReadAt` versus `mmap.Open
 
 Benchmark Results
 
-| Benchmark                | ns/op   | B/op | allocs/op |
+| Benchmark                | Time per op (ns) | Bytes per op | Allocs per op |
 |--------------------------|---------|------|------------|
 | ReadWithCopy             | 94,650  | 0    | 0          |
 | ReadWithMmap             | 50,082  | 0    | 0          |

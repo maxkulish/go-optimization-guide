@@ -90,10 +90,11 @@ Here’s a simple benchmark comparing appending to a preallocated slice vs. a ze
 
 You’ll typically observe that preallocation reduces allocations to a single one per operation and significantly improves throughput.
 
-```
-BenchmarkAppendNoPrealloc-14               41727             28539 ns/op          357626 B/op         19 allocs/op
-BenchmarkAppendWithPrealloc-14            170154              7093 ns/op           81920 B/op          1 allocs/op
-```
+| Benchmark                     | Iterations | Time per op (ns) | Bytes per op | Allocs per op |
+|-------------------------------|------------|------------------|---------------|----------------|
+| BenchmarkAppendNoPrealloc-14 | 41,727     | 28,539           | 357,626       | 19             |
+| BenchmarkAppendWithPrealloc-14 | 170,154   | 7,093            | 81,920        | 1              |
+
 ## When To Preallocate
 
 ✅ Preallocate when:

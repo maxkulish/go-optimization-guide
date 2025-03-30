@@ -179,10 +179,10 @@ To understand the impact of atomic operations versus mutex locks, we can compare
 
 Benchmark results:
 
-| Benchmark                     | Iterations | Time per op | Allocations |
-|-------------------------------|------------|-------------|-------------|
-| BenchmarkAtomicIncrement-14  | 39,910,514 | 80.40 ns/op | 0 B/op, 0 allocs/op |
-| BenchmarkMutexIncrement-14   | 32,629,298 | 110.7 ns/op | 0 B/op, 0 allocs/op |
+| Benchmark               | Iterations  | Time per op (ns) | Bytes per op | Allocs per op |
+|------------------------------|-------------|-------------|----------|-----------|
+| BenchmarkAtomicIncrement-14  | 39,910,514  | 80.40  | 0      | 0         |
+| BenchmarkMutexIncrement-14   | 32,629,298  | 110.7  | 0      | 0         |
 
 Atomic operations outperform mutex-based increments in both throughput and latency. The difference becomes more significant under higher contention, where avoiding lock acquisition helps reduce context switching and scheduler overhead.
 

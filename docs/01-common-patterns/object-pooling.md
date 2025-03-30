@@ -105,10 +105,10 @@ To prove that object pooling actually reduces allocations and improves speed, we
     {% include "01-common-patterns/src/object-pooling_test.go" %}
     ```
 
-```
-BenchmarkWithoutPooling-14       1692014               705.4 ns/op          8192 B/op          1 allocs/op
-BenchmarkWithPooling-14         160440506                7.455 ns/op           0 B/op          0 allocs/op
-```
+| Benchmark               | Iterations  | Time per op (ns) | Bytes per op | Allocs per op |
+|-------------------------|-------------|------------------|---------------|----------------|
+| BenchmarkWithoutPooling-14 | 1,692,014   | 705.4            | 8,192         | 1              |
+| BenchmarkWithPooling-14    | 160,440,506 | 7.455            | 0             | 0              |
 
 The benchmark results highlight the performance and memory usage differences between direct allocations and object pooling. The `BenchmarkWithoutPooling` function demonstrates higher execution time and memory consumption due to frequent heap allocations, resulting in increased garbage collection cycles. A nonzero allocation count confirms that each iteration incurs a heap allocation, contributing to GC overhead and slower performance.
 

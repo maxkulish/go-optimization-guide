@@ -88,7 +88,7 @@ To demonstrate the real impact of boxing large values vs. pointers, we benchmark
 
 Benchmark Results
 
-| Benchmark                      | ns/op   | B/op      | allocs/op |
+| Benchmark                | Time per op (ns) | Bytes per op | Allocs per op |
 |--------------------------------|---------|-----------|-----------|
 | BoxedLargeSliceGrowth          | 404,649 | ~4.13 MB  | 1011      |
 | PointerLargeSliceGrowth        | 340,549 | ~4.13 MB  | 1011      |

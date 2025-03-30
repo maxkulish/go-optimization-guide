@@ -122,7 +122,7 @@ Let’s run a benchmark to explore when heap allocations actually occur—and wh
 
 Benchmark Results
 
-| Benchmark                    | Iterations     | Time/op     | Bytes/op | Allocs/op |
+| Benchmark               | Iterations  | Time per op (ns) | Bytes per op | Allocs per op |
 |-----------------------------|----------------|-------------|----------|-----------|
 | BenchmarkStackAlloc-14      | 1,000,000,000  | 0.2604 ns   | 0 B      | 0         |
 | BenchmarkHeapAlloc-14       | 1,000,000,000  | 0.2692 ns   | 0 B      | 0         |
@@ -139,7 +139,7 @@ You might expect `HeapAlloc` to always allocate memory on the heap—but it does
 %}
 ```
 
-| Benchmark                    | Iterations     | Time/op     | Bytes/op | Allocs/op |
+| Benchmark               | Iterations  | Time per op (ns) | Bytes per op | Allocs per op |
 |-----------------------------|----------------|-------------|----------|-----------|
 | BenchmarkHeapAllocEscape-14 | 331,469,049    | 10.55 ns    | 24 B     | 1         |
 

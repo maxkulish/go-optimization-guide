@@ -64,10 +64,12 @@ Buffered writes and reads consistently demonstrate significant performance gains
     ```
 
 Results:
-```
-BenchmarkWriteNotBuffered-14                  49          23672792 ns/op           53773 B/op      10007 allocs/op
-BenchmarkWriteBuffered-14                   3241            379703 ns/op           70127 B/op      10008 allocs/op
-```
+
+| Benchmark                     | Iterations    | Time per op (ns) | Bytes per op | Allocs per op |
+|-------------------------------|------|------------------|---------------|----------------|
+| BenchmarkWriteNotBuffered-14 | 49   | 23,672,792       | 53,773        | 10,007         |
+| BenchmarkWriteBuffered-14    | 3241 | 379,703          | 70,127        | 10,008         |
+
 ## When To Buffer
 
 ✅ Use buffering when:
