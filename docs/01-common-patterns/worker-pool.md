@@ -88,14 +88,14 @@ In our benchmark, each task performed a CPU-intensive operation (e.g., cryptogra
 
 ## When To Use Worker Pools
 
-✅ Use a goroutine worker pool when:
+:material-checkbox-marked-circle-outline: Use a goroutine worker pool when:
 
 - You have a large or unbounded stream of incoming work. A pool helps prevent unbounded goroutine growth, which can lead to memory exhaustion and degraded system performance.
 - Processing tasks concurrently can overwhelm system resources. Worker pools provide backpressure and resource control by capping concurrency, helping you avoid CPU thrashing, connection saturation, or I/O overload.
 - You want to limit the number of parallel operations for stability. Controlling the number of active workers reduces the risk of spikes in system load, improving predictability and service reliability under pressure.
 - Tasks are relatively uniform in cost and benefit from queuing. When task sizes are similar, a fixed pool size ensures efficient throughput and fair task distribution without excessive coordination overhead.
 
-❌ Avoid a worker pool when:
+:fontawesome-regular-hand-point-right: Avoid a worker pool when:
 
 - Each task must be processed immediately with minimal latency. Queuing in a worker pool introduces delay. For latency-critical tasks, direct goroutine spawning avoids the scheduling overhead.
 - You can rely on Go's scheduler for natural load balancing in low-load scenarios. In light workloads, the overhead of managing a pool may outweigh its benefits. Go’s scheduler can often handle lightweight parallelism efficiently on its own.

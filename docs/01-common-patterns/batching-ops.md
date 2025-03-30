@@ -107,13 +107,13 @@ File I/O benchmarks showed the most dramatic gains. The batched version was over
 The cryptographic benchmarks demonstrated batching’s value in CPU-bound scenarios. Batched hashing nearly halved the total processing time while reducing allocation count by more than 70x. This reinforces batching as an effective strategy even in CPU-intensive workloads where fewer operations yield better locality and cache behavior.
 ## When To Use Batching
 
-✅ Use batching when:
+:material-checkbox-marked-circle-outline: Use batching when:
 
 - Individual operations are expensive (e.g., I/O, RPC, DB writes). Grouping multiple operations into a single batch reduces the overhead of repeated calls and improves efficiency.
 - The system benefits from reducing the frequency of external interactions. Fewer external calls can ease load on downstream systems and reduce contention or rate-limiting issues.
 - You have some tolerance for per-item latency in favor of higher throughput. Batching introduces slight delays but can significantly increase overall system throughput.
 
-❌ Avoid batching when:
+:fontawesome-regular-hand-point-right: Avoid batching when:
 
 - Immediate action is required for each individual input. Delaying processing to build a batch may violate time-sensitive requirements.
 - Holding data introduces risk (e.g., crash before flush). If data must be processed or persisted immediately to avoid loss, batching can be unsafe.

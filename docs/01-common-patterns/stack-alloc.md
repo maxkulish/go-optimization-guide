@@ -157,14 +157,14 @@ As shown in `BenchmarkHeapAllocEscape`, assigning the pointer to a global variab
 
 Not all escapes are worth preventing. Here’s when it makes sense to focus on stack allocation—and when it’s better to let values escape.
 
-### ✅ When to Avoid Escape
+:material-checkbox-marked-circle-outline: When to Avoid Escape
 
 - In performance-critical paths. Reducing heap usage in tight loops or latency-sensitive code lowers GC pressure and speeds up execution.
 - For short-lived, small objects. These can be efficiently stack-allocated without involving the garbage collector, reducing memory churn.
 - When you control the full call chain. If the object stays within your code and you can restructure it to avoid escape, it’s often worth the small refactor.
 - If profiling reveals GC bottlenecks. Escape analysis helps you target and shrink memory-heavy allocations identified in real-world traces.
 
-### ❌ When It’s Fine to Let Values Escape
+:fontawesome-regular-hand-point-right: When It’s Fine to Let Values Escape
 
 - When returning values from constructors or factories. Returning a pointer from `NewThing()` is idiomatic Go—even if it causes an escape, it improves clarity and usability.
 - When objects must outlive the function. If you're storing data in a global, sending to a goroutine, or saving it in a struct, escaping is necessary and correct.

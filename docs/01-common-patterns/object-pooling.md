@@ -115,14 +115,14 @@ The benchmark results highlight the performance and memory usage differences bet
 The memory allocation per operation appears larger than expected. Although the struct `Data` contains a `[1024]int` array, which is 4 KB (assuming `int` is 4 bytes on the architecture used), the actual allocated memory is **8192 B/op**. This discrepancy is due to Go’s memory allocation strategy, where the allocator efficiently rounds up allocations to fit into memory blocks. In many cases, Go’s runtime aligns struct allocations to the nearest power-of-two boundary, which may result in higher memory usage than the raw struct size.
 ## When Should You Use `sync.Pool`?
 
-✅ Use sync.Pool when:
+:material-checkbox-marked-circle-outline: Use sync.Pool when:
 
 - You have short-lived, reusable objects (e.g., buffers, scratch memory, request state). Pooling avoids repeated allocations and lets you recycle memory efficiently.
 - Allocation overhead or GC churn is measurable and significant. Reusing objects reduces the number of heap allocations, which in turn lowers garbage collection frequency and pause times.
 - The object’s lifecycle is local and can be reset between uses. When objects don’t need complex teardown and are safe to reuse after a simple reset, pooling is straightforward and effective.
 - You want to reduce pressure on the garbage collector in high-throughput systems. In systems handling thousands of requests per second, pooling helps maintain consistent performance and minimizes GC-related latency spikes.
 
-❌ Avoid sync.Pool when:
+:fontawesome-regular-hand-point-right: Avoid sync.Pool when:
 
 - Objects are long-lived or shared across multiple goroutines. `sync.Pool` is optimized for short-lived, single-use objects and doesn’t manage shared ownership or coordination.
 - The reuse rate is low and pooled objects are not frequently accessed. If objects sit idle in the pool, you gain little benefit and may even waste memory.

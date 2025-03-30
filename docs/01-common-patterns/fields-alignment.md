@@ -85,7 +85,7 @@ Placing padding between the two fields prevented false sharing, resulting in a m
 
 ## When To Align Structs
 
-✅ Always align structs. It's free to implement and often leads to better memory efficiency without changing any logic—only field order needs to be adjusted.
+:material-checkbox-marked-circle-outline: Always align structs. It's free to implement and often leads to better memory efficiency without changing any logic—only field order needs to be adjusted.
 
 Guidelines for struct alignment:
 

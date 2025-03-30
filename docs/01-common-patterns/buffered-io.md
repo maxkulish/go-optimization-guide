@@ -72,13 +72,13 @@ Results:
 
 ## When To Buffer
 
-✅ Use buffering when:
+:material-checkbox-marked-circle-outline: Use buffering when:
 
 - Performing frequent, small-sized I/O operations. Buffering groups small writes or reads into larger batches, which reduces the overhead of each individual operation.
 - Reducing syscall overhead is crucial. Fewer syscalls mean lower context-switching costs and improved performance, especially in I/O-heavy applications.
 - High throughput is more important than minimal latency. Buffered I/O can increase total data processed per second, even if it introduces slight delays in delivery.
 
-❌ Avoid buffering when:
+:fontawesome-regular-hand-point-right: Avoid buffering when:
 
 - Immediate data availability and low latency are critical. Buffers introduce delays by design, which can be unacceptable in real-time or interactive systems.
 - Buffering excessively might lead to uncontrolled memory usage. Without limits or proper flushing, buffers can grow large and put pressure on system memory.

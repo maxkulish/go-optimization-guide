@@ -193,8 +193,8 @@ Atomic operations outperform mutex-based increments in both throughput and laten
 
 ## When to Use Atomic Operations vs. Mutexes
 
-⚖️ Atomic operations shine in simple, high-frequency scenarios—counters, flags, coordination signals—where the cost of a lock would be disproportionate. They avoid lock queues and reduce context switching. But they come with limitations: no grouping of multiple operations, no rollback, and increased complexity when applied beyond their niche.
+:material-thought-bubble-outline: Atomic operations shine in simple, high-frequency scenarios—counters, flags, coordination signals—where the cost of a lock would be disproportionate. They avoid lock queues and reduce context switching. But they come with limitations: no grouping of multiple operations, no rollback, and increased complexity when applied beyond their niche.
 
-⚖️ Mutexes remain the right tool for managing complex shared state, protecting multi-step critical sections, and maintaining invariants. They're easier to reason and generally safer when logic grows beyond a few lines.
+:material-thought-bubble-outline: Mutexes remain the right tool for managing complex shared state, protecting multi-step critical sections, and maintaining invariants. They're easier to reason and generally safer when logic grows beyond a few lines.
 
 Choosing between atomics and locks isn't about ideology but scope. When the job is simple, atomics get out of the way. When the job gets complex, locks keep you safe.

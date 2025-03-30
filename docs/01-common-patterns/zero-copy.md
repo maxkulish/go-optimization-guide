@@ -117,13 +117,13 @@ The memory-mapped version (`mmap`) is nearly 2× faster than the standard read c
 
 ## When to Use Zero-Copy
 
-✅ Zero-copy techniques are highly beneficial for:
+:material-checkbox-marked-circle-outline: Zero-copy techniques are highly beneficial for:
 
 - Network servers handling large amounts of concurrent data streams. Avoiding unnecessary memory copies helps reduce CPU usage and latency, especially under high load.
 - Applications with heavy I/O operations like file streaming or real-time data processing. Zero-copy allows data to move through the system efficiently without redundant allocations or copies.
 
 !!! warning
-	❌ Zero-copy should be used judiciously. Since slices share underlying memory, care must be taken to prevent unintended data mutations. Shared memory can lead to subtle bugs if one part of the system modifies data still in use elsewhere. Zero-copy can also introduce additional complexity, so it’s important to measure and confirm that the performance gains are worth the tradeoffs.
+	:fontawesome-regular-hand-point-right: Zero-copy should be used judiciously. Since slices share underlying memory, care must be taken to prevent unintended data mutations. Shared memory can lead to subtle bugs if one part of the system modifies data still in use elsewhere. Zero-copy can also introduce additional complexity, so it’s important to measure and confirm that the performance gains are worth the tradeoffs.
 
 ### Real-World Use Cases and Libraries
 

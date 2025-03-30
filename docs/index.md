@@ -6,7 +6,7 @@ While Go doesn’t expose as many knobs for performance tuning as languages like
 
 We focus on **concrete techniques** with **mesurable impact** you can apply immediately—covering everything from core language features to advanced networking strategies.
 
-## 📌 What’s Covered So Far
+## :material-note-check: What’s Covered So Far
 
 ### [Common Go Patterns for Performance](./01-common-patterns/index.md)
 
@@ -23,7 +23,7 @@ Each pattern is grounded in practical use cases, with benchmarks and examples yo
 
 ---
 
-## 🔜 What’s Coming Next
+## :material-progress-check: What’s Coming Next
 
 ### High-Performance Networking in Go
 
@@ -39,7 +39,7 @@ We'll also explore when to drop down to lower-level libraries like `fasthttp`, a
 
 ---
 
-## 🎯 Who This Is For
+## :material-bow-arrow: Who This Is For
 
 This series is ideal for:
 

@@ -97,13 +97,13 @@ You’ll typically observe that preallocation reduces allocations to a single on
 
 ## When To Preallocate
 
-✅ Preallocate when:
+:material-checkbox-marked-circle-outline: Preallocate when:
 
 - The number of elements in slices or maps is known or reasonably predictable. Allocating memory up front avoids the cost of repeated resizing as the data structure grows.
 - Your application involves tight loops or high-throughput data processing. Preallocation reduces per-iteration overhead and helps maintain steady performance under load.
 - Minimizing garbage collection overhead is crucial for your application's performance. Fewer allocations mean less work for the garbage collector, resulting in lower latency and more consistent behavior.
 
-❌ Avoid preallocation when:
+:fontawesome-regular-hand-point-right: Avoid preallocation when:
 
 - The data size is highly variable and unpredictable. Allocating too much or too little memory can either waste resources or negate the performance benefit.
 - Over-allocation risks significant memory waste. Reserving more memory than needed can increase your application’s footprint unnecessarily.
