@@ -1,10 +1,10 @@
-# Go Optimization Guide: Patterns and Techniques for High-Performance Applications
+# Patterns and Techniques for Writing High-Performance Applications with Go
 
 The **Go App Optimization Series** is a collection of technical articles aimed at helping developers write faster, more efficient Go applications. Whether you're building high-throughput APIs, microservices, or distributed systems, this series offers practical patterns, real-world use cases, and low-level performance insights to guide your optimization efforts.
 
 While Go doesn’t expose as many knobs for performance tuning as languages like C++ or Rust, it still provides **plenty of opportunities** to make your applications significantly faster. From memory reuse and allocation control to efficient networking and concurrency patterns, Go offers a pragmatic set of tools for writing high-performance code.
 
-We focus on **concrete techniques** you can apply immediately—covering everything from core language features to advanced networking strategies.
+We focus on **concrete techniques** with **mesurable impact** you can apply immediately—covering everything from core language features to advanced networking strategies.
 
 ## 📌 What’s Covered So Far
 
@@ -25,19 +25,17 @@ Each pattern is grounded in practical use cases, with benchmarks and examples yo
 
 ## 🔜 What’s Coming Next
 
-### High-Performance Networking in Go *(working title)*
+### High-Performance Networking in Go
 
 In our upcoming deep dive into networking, we'll focus on building high-throughput network services with Go’s standard library and beyond. This includes:
 
 - Efficient use of `net/http` and `net.Conn`
-- Reusing buffers and minimizing GC pressure
 - Managing large volumes of concurrent connections
 - Performance tuning with epoll/kqueue and `GOMAXPROCS`
 - Load testing techniques and bottleneck diagnostics
+- TBD...
 
 We'll also explore when to drop down to lower-level libraries like `fasthttp`, and how to balance performance with maintainability.
-
-> 📖 *Want to suggest a better title for this section? We're considering alternatives like "Go Networking for Speed" or "Scaling Go Network Services."*
 
 ---
 
