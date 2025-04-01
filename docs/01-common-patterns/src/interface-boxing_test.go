@@ -21,8 +21,9 @@ func (LargeJob) Work() {}
 var sink []Worker
 
 func BenchmarkBoxedLargeSlice(b *testing.B) {
+    jobs := make([]Worker, 0, 1000)
     for i := 0; i < b.N; i++ {
-        var jobs []Worker
+        jobs = jobs[:0]
         for j := 0; j < 1000; j++ {
             var job LargeJob
             jobs = append(jobs, job)
@@ -32,8 +33,9 @@ func BenchmarkBoxedLargeSlice(b *testing.B) {
 }
 
 func BenchmarkPointerLargeSlice(b *testing.B) {
+    jobs := make([]Worker, 0, 1000)
     for i := 0; i < b.N; i++ {
-        var jobs []Worker
+        jobs := jobs[:0]
         for j := 0; j < 1000; j++ {
             job := &LargeJob{}
             jobs = append(jobs, job)
