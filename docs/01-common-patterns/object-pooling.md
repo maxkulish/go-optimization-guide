@@ -112,7 +112,6 @@ To prove that object pooling actually reduces allocations and improves speed, we
 
 The benchmark results highlight the performance and memory usage differences between direct allocations and object pooling. The `BenchmarkWithoutPooling` function demonstrates higher execution time and memory consumption due to frequent heap allocations, resulting in increased garbage collection cycles. A nonzero allocation count confirms that each iteration incurs a heap allocation, contributing to GC overhead and slower performance.
 
-The memory allocation per operation appears larger than expected. Although the struct `Data` contains a `[1024]int` array, which is 4 KB (assuming `int` is 4 bytes on the architecture used), the actual allocated memory is **8192 B/op**. This discrepancy is due to Go’s memory allocation strategy, where the allocator efficiently rounds up allocations to fit into memory blocks. In many cases, Go’s runtime aligns struct allocations to the nearest power-of-two boundary, which may result in higher memory usage than the raw struct size.
 ## When Should You Use `sync.Pool`?
 
 :material-checkbox-marked-circle-outline: Use sync.Pool when:
