@@ -4,7 +4,7 @@ The **Go App Optimization Guide** is a collection of technical articles aimed at
 
 While Go doesn’t expose as many knobs for performance tuning as languages like C++ or Rust, it still provides **plenty of opportunities** to make your applications significantly faster. From memory reuse and allocation control to efficient networking and concurrency patterns, Go offers a pragmatic set of tools for writing high-performance code.
 
-We focus on **concrete techniques** with **mesurable impact** you can apply immediately—covering everything from core language features to advanced networking strategies.
+We focus on **concrete techniques** with **measurable impact** you can apply immediately—covering everything from core language features to advanced networking strategies.
 
 ## :material-note-check: What’s Covered So Far
 
