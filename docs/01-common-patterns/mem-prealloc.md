@@ -54,6 +54,16 @@ for i := 0; i < 10000; i++ {
 }
 ```
 
+If it is known that the slice will be fully populated, we can be even more efficient by avoiding bounds checks:
+
+```go
+// Efficient
+result := make([]int, 10000)
+for i := range result {
+    result[i] = i
+}
+```
+
 ### Map Preallocation
 
 Maps grow similarly. By default, Go doesn’t know how many elements you’ll add, so it resizes the underlying structure as needed.
