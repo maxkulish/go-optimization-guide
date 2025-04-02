@@ -113,7 +113,7 @@ func copyData(data []byte) []byte {
 
 // BETTER: reuse buffers when possible
 var bufPool = sync.Pool{
-    New: func() interface{} { return make([]byte, 0, 1024) },
+    New: func() any { return make([]byte, 0, 1024) },
 }
 
 func copyData(data []byte) []byte {
@@ -152,7 +152,7 @@ Use `go build -gcflags="-m"` to view escape analysis diagnostics. See [Stack All
 
 ```go
 var bufPool = sync.Pool{
-    New: func() interface{} { return new(bytes.Buffer) },
+    New: func() any { return new(bytes.Buffer) },
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
