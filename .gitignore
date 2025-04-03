@@ -85,3 +85,4 @@ tags
 #MkDocs
 
 /site/
+.venv/
