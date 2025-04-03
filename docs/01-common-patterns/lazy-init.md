@@ -10,7 +10,7 @@ Additionally, lazy initialization is crucial when you have code that might be ex
 
 ### Using `sync.Once` for Thread-Safe Initialization
 
-Go provides the `sync.Once` type to easily implement lazy initialization that is safe for concurrent use:
+Go provides the `sync.Once` type to implement lazy initialization safely in concurrent environments:
 
 ```go
 var (
@@ -26,27 +26,54 @@ func getResource() *MyResource {
 }
 ```
 
-In this example, `expensiveInit()` is guaranteed to execute only once, even if multiple goroutines call `getResource()` simultaneously. The simplicity and clarity of this pattern make it a popular choice for lazy initialization and for ensuring certain logic runs exactly once.
+In this example, the function `expensiveInit()` executes exactly once, no matter how many goroutines invoke `getResource()` concurrently. This ensures thread-safe initialization without additional synchronization overhead.
 
-### Custom Lazy Initialization with Atomic Operations
+### Using `sync.OnceValue` and `sync.OnceValues` for Initialization with Output Values
 
-For more granular control or when conditional retries are necessary, atomic operations can be useful:
+Since Go 1.21, if your initialization logic returns a value, you might prefer using `sync.OnceValue` (single value) or `sync.OnceValues` (multiple values) for simpler, more expressive code:
 
 ```go
-var initialized atomic.Bool
-var resource *MyResource
+var getResource = sync.OnceValue(func() *MyResource {
+	return expensiveInit()
+})
 
-func getResource() *MyResource {
-	if !initialized.Load() {
-		if initialized.CompareAndSwap(false, true) {
-			resource = expensiveInit()
-		}
-	}
-	return resource
+func processData() {
+	res := getResource()
+	// use res
 }
 ```
 
-Here, atomic operations offer a lock-free alternative to `sync.Once`, reducing overhead in extremely performance-sensitive scenarios or when the logic must execute once but conditions for initialization can be complex or conditional.
+Here, `sync.OnceValue` neatly encapsulates initialization logic and directly returns the initialized value, eliminating explicit state management.
+
+For scenarios where your initialization returns multiple values, `sync.OnceValues` offers a clean and efficient solution:
+
+```go
+var getConfig = sync.OnceValues(func() (*Config, error) {
+	return loadConfig("config.yml")
+})
+
+func processData() {
+	config, err := getConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
+	// use config
+}
+```
+
+Choosing `sync.OnceValue` or `sync.OnceValues` helps you clearly express initialization logic with direct value returns, whereas `sync.Once` remains best suited for general scenarios requiring flexible initialization logic without immediate value returns.
+
+### Custom Lazy Initialization with Atomic Operations
+
+Yes, it’s technically possible to replace `sync.Once`, `sync.OnceValue`, or `sync.OnceFunc` with custom logic using low-level atomic operations. This approach may offer slightly finer control or avoid allocations in extremely performance-critical code paths.
+
+**That said, it’s rarely worth the tradeoff.**
+
+Manual atomic-based initialization is more error-prone, harder to read, and easier to get wrong—especially when concurrency and memory visibility guarantees are involved. For the vast majority of cases, `sync.Once*` is safer, clearer, and performant enough.
+
+!!! info
+	If you’re convinced that atomic-based lazy initialization is justified in your case, this blog post walks through the details and caveats:  
+	:material-hand-pointing-right: [Lazy initialization in Go using atomics](https://goperf.dev/blog/2025/04/03/lazy-initialization-in-go-using-atomics/)
 
 ### Performance Considerations
 
