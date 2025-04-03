@@ -1,4 +1,4 @@
-[![pages-build-deployment](https://github.com/astavonin/go-optimization-guide/actions/workflows/pages/pages-build-deployment/badge.svg?branch=main)](https://github.com/astavonin/go-optimization-guide/actions/workflows/pages/pages-build-deployment)
+[![publish-latest](https://github.com/astavonin/go-optimization-guide/actions/workflows/publish-latest.yml/badge.svg)](https://github.com/astavonin/go-optimization-guide/actions/workflows/publish-latest.yml)
 
 # Go Optimization Guide
 
