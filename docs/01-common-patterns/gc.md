@@ -101,32 +101,6 @@ This tells the GC to operate with the default growth ratio and to start collecti
 
 ## Practical Strategies for Reducing GC Pressure
 
-### Minimize Allocation Rate
-
-GC cost is proportional to the allocation rate. Avoid unnecessary allocations:
-
-```go
-// BAD: creates a new slice every time
-func copyData(data []byte) []byte {
-    return append([]byte{}, data...)
-}
-
-// BETTER: reuse buffers when possible
-var bufPool = sync.Pool{
-    New: func() any { return make([]byte, 0, 1024) },
-}
-
-func copyData(data []byte) []byte {
-    buf := bufPool.Get().([]byte)
-    buf = buf[:0]              // reset buffer
-    buf = append(buf, data...)
-    defer bufPool.Put(buf)
-    return buf
-}
-```
-
-See [Object Pooling](./object-pooling.md) for more details.
-
 ### Prefer Stack Allocation
 
 Go allocates variables on the stack whenever possible. Avoid escaping variables to the heap:
