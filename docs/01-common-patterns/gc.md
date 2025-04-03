@@ -6,13 +6,16 @@ This becomes especially relevant in systems prioritizing low latency, predictabl
 
 ## How Go's Garbage Collector Works
 
+!!! info
+    Highly encourage you to read the official [A Guide to the Go Garbage Collector](https://go.dev/doc/gc-guide)! The document provides a detailed description of multiple Go's GC internals.
+
 Go uses a **non-generational, concurrent, tri-color mark-and-sweep** garbage collector. Here's what that means in practice and how it's implemented.
 
 ### Non-generational
 
 Many modern GCs, like those in the JVM or .NET CLR, divide memory into *generations* (young and old) under the assumption that most objects die young. These collectors focus on the young generation, which leads to shorter collection cycles.
 
-Go’s GC takes a different approach. It treats all objects equally—no generational segmentation—because it prioritizes simplicity, short pause times, and concurrent scanning. This design avoids the need to promote logic or complex memory regions. While it does mean that the GC may scan more objects overall, this is mitigated by concurrent execution and fast write barriers.
+Go’s GC takes a different approach. It treats all objects equally—no generational segmentation—not because generational GC conflicts with short pause times or concurrent scanning, but because it hasn’t shown clear, consistent benefits in real-world Go programs with the designs tried so far. This choice avoids the complexity of promotion logic and specialized memory regions. While it can mean scanning more objects overall, this cost is mitigated by concurrent execution and efficient write barriers.
 
 ### Concurrent
 
@@ -98,6 +101,28 @@ GOGC=100 GOMEMLIMIT=4GiB ./your-service
 ```
 
 This tells the GC to operate with the default growth ratio and to start collecting sooner if heap usage nears 4 GiB.
+
+### GOMEMLIMIT=X and GOGC=off configuration
+
+In scenarios where memory availability is fixed and predictable—such as within containers or VMs, you can use these two variables together:
+
+- `GOMEMLIMIT=X` tells the runtime to aim for a specific memory ceiling. For example, `GOMEMLIMIT=2GiB` will trigger garbage collection when total memory usage nears 2 GiB.
+- `GOGC=off` disables the default GC pacing algorithm, so garbage collection only runs when the memory limit is hit.
+
+This configuration maximizes memory usage efficiency and avoids the overhead of frequent GC cycles. It's especially effective in high-throughput or latency-sensitive systems where predictable memory usage matters.
+
+**Example:**
+
+```bash
+GOMEMLIMIT=2GiB GOGC=off ./my-app
+```
+
+With this setup, memory usage grows freely until the 2 GiB threshold is reached. At that point, Go performs a full garbage collection pass.
+
+!!! warning
+    - Always benchmark with your real workload. Disabling automatic GC can backfire if your application produces a lot of short-lived allocations.
+    - Monitor memory pressure and GC pause times using `runtime.ReadMemStats` or `pprof`.
+    - This approach works best when your memory usage patterns are well understood and stable.
 
 ## Practical Strategies for Reducing GC Pressure
 
