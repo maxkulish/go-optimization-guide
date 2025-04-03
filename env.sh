@@ -1,6 +1,6 @@
-python3 -m venv venv
+uv venv
 
-source ./venv/bin/activate
-export PATH=`pwd`/venv/bin:$PATH
+source ./.venv/bin/activate
+export PATH=`pwd`/.venv/bin:$PATH
 
-pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-include-markdown-plugin mkdocs-rss-plugin
+uv pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-include-markdown-plugin mkdocs-rss-plugin
